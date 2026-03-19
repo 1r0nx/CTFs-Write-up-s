@@ -6,9 +6,10 @@ So for this challenge there is no `print_flag` function :(
 How are we going to do ?
 
 When we run `checksec challenge`  we get this:
+
 ![](./img/16.png)
 
-It says that the stack is executable!
+It says that the stack is executable!  
 An **executable stack** is a region of a memory (the call stack) that has permissions set to allow the execution of **machine code** directly from it.
 
 We have control over what we put in the `name` variable and we are given his address in memory.
@@ -109,3 +110,5 @@ With the `hexdump` followed by the address of `name`, you get a nice display of 
 
 
 There is much more commands and more things to explore with gdb/pwndbg. This is just a showcase :)
+
+[Bug Bounty 6](./Bug_Bounty_6.md)
