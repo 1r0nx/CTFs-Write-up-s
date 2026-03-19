@@ -43,4 +43,5 @@ conn.sendline(exploit)
 conn.interactive()
 ``` 
 
-[Source code](./Bug_Bounty_2.md)
+[Bug Bounty 2](./Bug_Bounty_2.md)
+

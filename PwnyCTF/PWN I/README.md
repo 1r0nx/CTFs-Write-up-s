@@ -24,4 +24,5 @@ Summary:
 Registers = fast CPU storage (small, limited)  
 Stack = organized memory for function calls (larger, slower)
 
-[Source code](./Bug_Bounty_1.md)
+[Bug Bounty 1](./Bug_Bounty_1.md)
+
