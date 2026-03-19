@@ -2,7 +2,7 @@
 
 [Source code](./handout/Bug_Bounty_5)
 
-So for this challenge there is no `print_flag` function :(
+So for this challenge there is no `print_flag` function :(  
 How are we going to do ?
 
 When we run `checksec challenge`  we get this:
@@ -10,13 +10,13 @@ When we run `checksec challenge`  we get this:
 ![](./img/16.png)
 
 It says that the stack is executable!  
-An **executable stack** is a region of a memory (the call stack) that has permissions set to allow the execution of **machine code** directly from it.
+An **executable stack** is a region of a memory that has permissions set to allow the execution of **machine code** directly from it.
 
 We have control over what we put in the `name` variable and we are given his address in memory.
 
 We need to:
 1. Write a **shellcode** in `name`
-2. Overwrite the return address of the program with the address of our shellcode (the `name`  address)
+2. Overwrite the return address of the program with the address of our shellcode (the `name`  address) as we did in previous challenges
 
 But be aware that name is 48 bytes so we need to find a shellcode less than 48 bytes.
 
@@ -26,7 +26,7 @@ By google searching, I found this one:
 ```
 Who is 23 bytes long and will execute `/bin/sh`  
 
-Information to consider  
+Information to consider:    
 1. The variable `name` is 48 bytes so we need to fill the remaining 25 bytes of `name` with `\x00` after the shellcode
 2. Just after `name` there is a register called `RBP` we need to overwrite with 8 bytes
 3. Overwrite the return address of the program with the address of our shellcode (name address)
@@ -64,7 +64,7 @@ conn.interactive()
 
 In this challenge the stack is not displayed by the program. The binary is given, so we can analyse it locally with gdb/pwndbg
 
-Let's showcase the stack, registers and backtrace in gdb/pwndbg with the following script
+Let's showcase the stack, registers and backtrace in gdb/pwndbg with the following script:
 
 ```python
 from pwn import *
@@ -101,14 +101,15 @@ Here is what it will look like:
 
 After the exploit sent, we can see in the `BACKTRACE` section that after our breakpoint at `vuln+71` the next instruction to be executed is the address `name` so our shellcode.
 
-By running the command `stack 20`, we can see that the RIP has been successfully overwrite with 8 B's
+By running the command `stack 20`, we can see that the `RBP` has been successfully overwrite with 8 B's
 ![](./img/19.png)
 
 
-With the `hexdump` followed by the address of `name`, you get a nice display of the stack (like the previous print_flag function) at the breakpoint we are
+With the `hexdump` command followed by the address of `name`, you get a nice display of the stack (like the previous print_flag function) at the breakpoint we are
 ![](./img/20.png)
 
 
-There is much more commands and more things to explore with gdb/pwndbg. This is just a showcase :)
+There is much more commands and more things to explore with gdb/pwndbg.  
+This is just a showcase :)
 
 [Bug Bounty 6](./Bug_Bounty_6.md)
