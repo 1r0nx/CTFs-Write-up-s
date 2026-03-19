@@ -31,8 +31,10 @@ conn.interactive()
 ![](./img/6.png)
 
 What have we done with this script ?  
-Well the pwntools python package helped us by `packing` the `0xdeadbeef` in 64 bits in little-endian with the `p64` function given by pwntools
+Well the pwntools python package helped us by `packing` the `0xdeadbeef` in 64 bits in little-endian with the `p64` function given by pwntools.  
 The question here is how did we got to know that the architecture is 64 bits in little-endian ?  
 With the checksec command (who is part of the pwntools package) we can get this information.
 
 ![](./img/7.png)
+
+[Bug Bounty 3](./Bug_Bounty_3.md)
