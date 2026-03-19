@@ -1,6 +1,7 @@
 ![](./img/1.png)
 
-[Source code](./handout/Bug Bounty 1)
+[Source code](./handout/Bug_Bounty_1)
+
 So here is the interaction with the challenge:
 ![](./img/2.png)
 

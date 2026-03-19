@@ -1,6 +1,6 @@
 This part I is focused on buffer overflow vulnerability from basics to advanced concept
 
-**Register and Stack overview**
+**Register and Stack overview**  
 Let's start by some simple term clarification and explanation.  
 
 To run instructions a program uses memory and CPU .
@@ -21,7 +21,6 @@ When the function ends:
 - data is removed (popped) from the stack
 
 Summary:
-Registers = fast CPU storage (small, limited)
+Registers = fast CPU storage (small, limited)  
 Stack = organized memory for function calls (larger, slower)
 
-[Bug Bounty 1](./Bug Bounty 1.md)
