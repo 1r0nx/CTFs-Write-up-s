@@ -1,6 +1,6 @@
 ![](./img/5.png)
 
-[Source code](./handout/Bug Bounty 2)
+[Source code](./handout/Bug_Bounty_2)
 
 The interaction with the challenge is the same as the previous. But here according to the source code, in order to get the flag we need to change the `number` variable from `0xcafebabe` into `0xdeadbeef`
 

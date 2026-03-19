@@ -1,7 +1,7 @@
 
 ![](./img/8.png)
 
-[Source code](./handout/Bug Bounty 3)
+[Source code](./handout/Bug_Bounty_3)
 
 The interaction is the same as the previous challenges.  
 But the problem is that here the `print_flag` function is not called in the program. So how can we get it ?

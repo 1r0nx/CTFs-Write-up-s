@@ -1,6 +1,6 @@
 ![](./img/15.png)
 
-[Source code](./handout/Bug Bounty 5)
+[Source code](./handout/Bug_Bounty_5)
 
 So for this challenge there is no `print_flag` function :(
 How are we going to do ?
