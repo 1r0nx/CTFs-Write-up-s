@@ -13,8 +13,8 @@ Here we get a pointer to the `name` variable.
 We get another pointer `ptr` and from the source code this pointer will hold the address to the `value` variable.  
 Here it's might be tricky but it's not.  
 In the source code the name variable is 48 bytes but `fgets` function expect us to enter 64 bytes. That mean we can overwrite `ptr` and `value` because they are next to name `[name][ptr][value][return]`   
-We have the address of name and PIE is not enabled, so we can:
-1. calculate the value of the return address (return_addr = name_addr + 72 (48 + 8 + 8 +8 = 72 bytes) or 0x48 in hex)
+We have the address of `name` and PIE is not enabled, so we can:
+1. calculate the value of the return address (return_addr = name_addr + 72 (48 + 8 + 8 +8 = 72 bytes) or 0x48 bytes (in hex))
 2. overwrite `ptr` with the return address calculated previously (ptr now hold the return address of the program) 
 3. overwrite `value` with the `print_flag` address 
 
@@ -61,7 +61,7 @@ conn.interactive()
 ![](./img/14.png)
 
 As we can see:
-1. `ptr` holds the address of the return address (in little-endian)
+1. `ptr` holds the return address (in little-endian)
 2. `value` holds the address of print_flag (in little-endian)
 3. We got the flag!
 

