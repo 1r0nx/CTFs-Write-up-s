@@ -14,7 +14,7 @@ In our case it's not enabled that means the program will load the same address e
 
 Let's breakdown the exploit route  
 
-#### 1. Retrieve the flag variable address from the binary
+### 1. Retrieve the flag variable address from the binary
 We can do this with the `nm` command  
 
 ![](./img/6.png)
