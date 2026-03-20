@@ -67,7 +67,7 @@ That means we found the start offset of the `name` variable
 
 ![](./img/7.png)
 
-The offset the `name` address starts is `10` 
+The offset the `name` variable starts is `10` 
 
 ### 3. Now we can write the final exploit!
 We know that the `name` variable start at offset `10` so when we send data to name it start writing from this offset. name is `64` bytes. For example if we send in name `hello` it will take 5 bytes in name memory.

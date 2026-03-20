@@ -44,7 +44,7 @@ conn.interactive()
 ```
 
 Why did we send 56 A's ? Because after `name` who is 48 bytes there is the `RBP` register who is 8 bytes between `name` and the return address.  
-The stack will look like this `[name][RBP][return]`. So we need to overwrite `RBP` with 8 bytes before we can overwrite the return address `48+6 = 54`  
+The stack will look like this `[name][saved_RBP][return]`. So we need to overwrite the `saved RBP` of the previous function with 8 bytes before we can overwrite the return address `48+6 = 54`  
 
 The `print_stack` function helps a lot because it's shows the stack.
 

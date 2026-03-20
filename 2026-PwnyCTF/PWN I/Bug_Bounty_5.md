@@ -28,7 +28,7 @@ Who is 23 bytes long and will execute `/bin/sh`
 
 Information to consider:    
 1. The variable `name` is 48 bytes so we need to fill the remaining 25 bytes of `name` with `\x00` after the shellcode
-2. Just after `name` there is a register called `RBP` we need to overwrite with 8 bytes
+2. Just after `name` there is the `saved RBP` we need to overwrite with 8 bytes
 3. Overwrite the return address of the program with the address of our shellcode (name address)
 
 Exploit time!
@@ -105,7 +105,7 @@ Here is what it will look like:
 
 After the exploit sent, we can see in the `BACKTRACE` section that after our breakpoint at `vuln+71` the next instruction to be executed is the address `name` so our shellcode.
 
-By running the command `stack 20`, we can see that the `RBP` has been successfully overwrite with 8 B's
+By running the command `stack 20`, we can see that the `saved RBP` has been successfully overwrite with 8 B's
 ![](./img/19.png)
 
 
