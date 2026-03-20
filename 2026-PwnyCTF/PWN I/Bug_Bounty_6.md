@@ -47,7 +47,7 @@ Reads memory at given address
 Input: "%1234x%10$n"  
 Writes 1234 to the address at position 10 on the stack  
 
-5. Precise write (byte-wise):
+5. Precise write (byte-wise):  
 Use %hhn, %hn, %n to control write size  
 
 Summary:  
@@ -102,11 +102,11 @@ If the result display by the program is
 AAAAAAAA0x4141414141414141
 ```
 
-That means we found the offset of name
+That means we found the start offset of name
 
 ![](./img/23.png)
 
-The name variable is at the `6` offset on the stack.  
+The name variable start at the `6` offset on the stack.  
 Note: Here this information will not be use, but it is always useful to know where the variable address you have control over is on the stack.
 
 #### 2. Calculate the address of name
@@ -138,7 +138,7 @@ It will open like this:
 
 ![](./img/24.png)
 
-On the top panel we can see that we have the address leaked by `%9$`
+On the top panel we can see that we have the address leaked by `%9$p`
 
 On the bottom panel, on the stack part we can see that the address of the info variable (where we send "yo") is `0x7ffe40631700` in this example. 
 
