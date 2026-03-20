@@ -14,14 +14,14 @@ Let's check the binary protection.
 
 Let's breakdown in steps the exploit process
 
-###### 1. Get the address of `blag_file` 
+### 1. Get the address of `blag_file` 
 We can achieve this with `nm` command
 
 ![](./img/12.png)
 
 The address is `0x00000000004040c0`
 
-##### 2. Find the offset of `name` on the stack
+### 2. Find the offset of `name` on the stack
 I will use a python script to do it:  
 
 ```python
@@ -68,7 +68,7 @@ That means we found the start offset of the `name` variable
 
 The `name` variable starts at offset `10`
 
-##### 3. Write the final exploit
+### 3. Write the final exploit
 Arbitrary write is a little bit hard to do by hand, but pwntools gives us a handy function `fmtstr_payload` to handle this.  
 Here is how it works
 ```python
