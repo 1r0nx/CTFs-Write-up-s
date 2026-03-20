@@ -107,7 +107,7 @@ That means we found the start offset of name
 ![](./img/23.png)
 
 The name variable start at the `6` offset on the stack.  
-Note: Here this information will not be use, but it is always useful to know where the variable address you have control over is on the stack.
+**Note:** Here this information will not be use, but it is always useful to know where the variable address you have control over is on the stack.
 
 #### 2. Calculate the address of name
 With the help of `gdb/pwndbg` you need to find a leaked memory address who will always at the same distance of name so you can calculate his address.  
@@ -140,7 +140,7 @@ It will open like this:
 
 On the top panel we can see that we have the address leaked by `%9$p`
 
-On the bottom panel, on the stack part we can see that the address of the info variable (where we send "yo") is `0x7ffe40631700` in this example. 
+On the bottom panel, on the stack part we can see that the address of the info variable (where we sent "yo") is `0x7ffe40631700` in this example. 
 
 ![](./img/25.png)
 
