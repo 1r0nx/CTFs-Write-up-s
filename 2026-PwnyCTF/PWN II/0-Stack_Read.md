@@ -3,9 +3,9 @@
 [Source Code](./handout/0-Stack_Read)
 
 From the source code, we can see that the flag is read in the main function and is stored in the `flag` variable.  
-It means the flag is on the stack.
+It means the `flag` is on the stack.
 
-From the source code, there is a format string vulnerability in the `greet` function
+From the source code, there is a format string vulnerability in the `greet` function  
 [Format String Vulnerability Explanation](./README.md)  
 
 ![](./img/2.png)
@@ -14,7 +14,7 @@ To solve this challenge we need to read from the stack.
 
 Here I wrote a script to automate the process instead of doing it manually.  
 This script will:  
-1. Iterate from 1 to 31 and send `%1$lx`,`%2$lx`,...,`%30$lx` to the program to leak value from the stack  
+1. Iterate from 1 to 31 and send `%1$lx`,`%2$lx` ... `%30$lx` to the program to leak value from the stack  
 2. Extract the value return by the program with the `leak_hex_int` function  
 3. Convert those value into text with the `decode_leaks` in little and big endian and show it to us.  
 

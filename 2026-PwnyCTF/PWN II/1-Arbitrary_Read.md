@@ -14,14 +14,14 @@ In our case it's not enabled that means the program will load the same address e
 
 Let's breakdown the exploit route  
 
-###### 1. Retrieve the flag variable address from the binary
+#### 1. Retrieve the flag variable address from the binary
 We can do this with the `nm` command  
 
 ![](./img/6.png)
 
 The `flag` variable address is `0x00000000004040c0`
 
-##### 2. Find the offset of the `name` variable in memory
+#### 2. Find the offset of the `name` variable in memory
 
 I will use a python script to do it:  
 
@@ -46,7 +46,7 @@ for i in range(1, 31):
 		log.warning(f"EOF at offset {i}")
 ```
 
-So this script will iterate from value 1 to 31 and will send:
+So this script will iterate from value 1 to 31 and will send them to the program:
 
 ```python
 AAAAAAAA%1$p
@@ -69,7 +69,7 @@ That means we found the start offset of the `name` variable
 
 The offset the `name` address starts is `10` 
 
-##### 3. Now we can write the final exploit!
+#### 3. Now we can write the final exploit!
 We know that the `name` variable start at offset `10` so when we send data to name it start writing from this offset. name is `64` bytes. For example if we send in name `hello` it will take 5 bytes in name memory.
 
 name layout after sending "hello"  
