@@ -35,15 +35,15 @@ Examples:
 Input: "%p %p %p %p"  
 Output: leaks stack values
 
-2. Finding offset:
+2. Finding offset:  
 Input: "AAAA %p %p %p"  
 Look for 0x41414141 in output  
 
-3. Arbitrary read:
+3. Arbitrary read:  
 Input: "%7$s" + address  
 Reads memory at given address  
 
-4. Arbitrary write:
+4. Arbitrary write:  
 Input: "%1234x%10$n"  
 Writes 1234 to the address at position 10 on the stack  
 
