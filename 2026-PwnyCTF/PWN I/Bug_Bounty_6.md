@@ -55,7 +55,7 @@ Format string vulnerabilities allow attackers to read and write memory by abusin
 
 Let's break down the exploitation step 
 
-#### 1. Find the `OFFSET` our name variable is at.
+### 1. Find the `OFFSET` our name variable is at.
 
 In the example provided earlier there is this 
 ```
@@ -109,7 +109,7 @@ That means we found the start offset of name
 The name variable start at the `6` offset on the stack.  
 **Note:** Here this information will not be use, but it is always useful to know where the variable address you have control over is on the stack.
 
-#### 2. Calculate the address of name
+### 2. Calculate the address of name
 With the help of `gdb/pwndbg` you need to find a leaked memory address who will always at the same distance of name so you can calculate his address.  
 With a lot of trial and errors I found that if you subtract `0x20` form the address leaked with `%9$p` you get the info address.  
 I will show case how I found it with pwndbg
@@ -154,7 +154,7 @@ It's `0x20` in hex. This difference will be the same for every instance of the p
 info_address = leaked_address - 0x20
 ```
 
-#### 3. Create our final payload
+### 3. Create our final payload
 In this challenge the stack is also executable.  
 Here is the final exploit!
 
