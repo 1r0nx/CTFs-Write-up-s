@@ -15,7 +15,7 @@ Our limitations:
 
 For this challenge my biggest mistake was trying to exploit the binary locally. After I was able to get the flag but locally but not remotely, I've decided to replicate the environment challenge with the `Dockerfile` they gave us but I added `gdb` to debug on it (you need to log as root to use gdb on the docker container). I've noticed that what I was leaking on my local machines was offsets away on the docker container.  
 For example on my local machine `%27$p` would leak the main address but on the docker container it was `%25$p`  
-I also found by trials, errors and calculation the leak to an address to compute the `saved RIP` register address which is `%26$p`.  
+I also found by trials, errors and calculation a leak to an address to compute the `saved RIP` register address which is `%26$p`.  
 Our goal is to overwrite the `saved RIP` register address with the `print_flag` address
 
 
@@ -86,6 +86,6 @@ conn.interactive()
 
 **Note:** I don't know why but sometimes the script doesn't work. It works like 60% to 70% of the time.
 
-Additional challenge [printf write](./printf_write)
+Additional challenge [printf write](./printf_write.md)
 
 
