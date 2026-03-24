@@ -22,28 +22,22 @@ GOT = a writable table in memory that stores the real runtime addresses
 - So it stores a placeholder in the GOT, filled in at runtime by the dynamic linker
 
 #### HOW A CALL WORKS (lazy binding)
-  your code
-     │
-     ▼
-  PLT stub  ──→  reads GOT entry  ──→  real printf()
-                    (first call: linker resolves & writes the address)
-                    (next calls: address already there, jump directly)
+your code -> PLT stub -> reads GOT entry -> call real printf()  
+if first call: linker resolves & writes the address)  
+for next calls: address already there, jump directly)
 
 #### WHY IS IT A PWN TARGET?
-  If you can write to GOT[printf]  →  redirect any printf() call
+  If you can write to `GOT[printf]`  →  redirect any printf() call
   to whatever function you want (e.g. system, print_flag, win…)
 
 #### RELRO protection
-  No/Partial RELRO  →  GOT is writable  → can overwrite ✅
+  No/Partial RELRO  →  GOT is writable  → can overwrite ✅  
   Full RELRO     →  GOT is read-only  → cannot overwrite ❌
 
-#### PWNTOOLS
-  elf.got['printf']   # address OF the GOT entry (where the pointer lives)
-  elf.plt['printf']   # address of the PLT stub (what your code actually calls)
 
-`PIE` is not enabled so we can just retrieve the address of the `print_flag` address with the `nm` command, and find the offset the `name` variable is at the previous method.
+`PIE` is not enabled so we can just retrieve the address of the `print_flag` address with the `nm` command (or with `elf.symbols['print_flag'` in the exploit code), and find the offset the `name` variable is at the previous method.
 
-In the got we will overwrite the `printf` function so the next time it runs, `print_flag` get executed.  
+In the `GOT` we will overwrite the `printf` function so the next time it runs, `print_flag` get executed.  
 
 Final script:
 
@@ -77,6 +71,6 @@ conn.interactive()
 
 ![](./img/25.png)
 
-We successfully overwrote the `GOT` 
+We successfully overwrote the `GOT`!
 
 [5-Grander_Finale](./5-Grander_Finale.md)

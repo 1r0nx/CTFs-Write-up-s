@@ -13,9 +13,10 @@ Our limitations:
 4. Address are changed at every executions (PIE enabled)
 
 
-For this challenge my biggest mistake was trying to exploit the binary locally. After I was able to get the flag but locally, I've decided to replicate the environment challenge with the `Dockerfile` they gave us but I added `gdb` to debug on it (you need to log as root to use gdb on the docker container). I've noticed that what I was leaking on my local machines was offset away on the docker container.  
+For this challenge my biggest mistake was trying to exploit the binary locally. After I was able to get the flag but locally but not remotely, I've decided to replicate the environment challenge with the `Dockerfile` they gave us but I added `gdb` to debug on it (you need to log as root to use gdb on the docker container). I've noticed that what I was leaking on my local machines was offsets away on the docker container.  
 For example on my local machine `%27$p` would leak the main address but on the docker container it was `%25$p`  
-I also found by trials, errors and calculation the leak to an address to compute the `saved RIP` register address which is `%26$p` 
+I also found by trials, errors and calculation the leak to an address to compute the `saved RIP` register address which is `%26$p`.  
+Our goal is to overwrite the `saved RIP` register address with the `print_flag` address
 
 
 FINALE SCRIPT:
