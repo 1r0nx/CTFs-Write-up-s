@@ -2,7 +2,7 @@
 
 [Source code](./handout/1-Arbitrary_Read)
 
-Here is the source code the flag variable is global. That means it's not on the stack so the previous method won't work.  
+In the source code, the flag variable is global. That means it's not on the stack so the previous method won't work.  
 Let's check the protection on the binary with the `checksec` command:  
 
 ![](./img/5.png)
@@ -67,7 +67,7 @@ That means we found the start offset of the `name` variable
 
 ![](./img/7.png)
 
-The offset the `name` variable starts is `10` 
+The the `name` variable starts at offset `10`
 
 ### 3. Now we can write the final exploit!
 We know that the `name` variable start at offset `10` so when we send data to name it start writing from this offset. name is `64` bytes. For example if we send in name `hello` it will take 5 bytes in name memory.
@@ -78,7 +78,8 @@ Note: Every bloc is 8 bytes
 
 Now the payload we will send will look like this in memory:  
 `[%11$sABC][0x4040c0][00000000]...[00000000]`  
-It translate by **read whatever you find at the address of the 11th offset** and since we set the 11th offset to be the `flag` variable address, the program will read it! We unlocked arbitrary read.  
+It translate by **read whatever you find at the address of the 11th offset** and since we set the 11th offset to be the `flag` variable address, the program will read it!  
+We unlocked arbitrary read.  
 
 You can also do:  
 `[%12$sABC][00000000][0x4040c0]...[00000000]`  

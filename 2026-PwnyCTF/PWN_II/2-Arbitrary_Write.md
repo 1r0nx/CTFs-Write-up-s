@@ -4,7 +4,7 @@
 
 ![](./img/10.png)
 
-From this interaction it looks like the program is trying to read a file name `blag.txt` but we know for sur it's supposed to be `flag.txt`  
+From this interaction it looks like the program is trying to read a file named `blag.txt` but we know for sur it's supposed to be `flag.txt`  
 We need to change that.  
 Let's check the binary protection.  
 

