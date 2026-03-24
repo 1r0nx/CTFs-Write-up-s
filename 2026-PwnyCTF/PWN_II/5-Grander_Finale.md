@@ -86,3 +86,6 @@ conn.interactive()
 
 **Note:** I don't know why but sometimes the script doesn't work. It works like 60% to 70% of the time.
 
+Additional challenge [printf write](./printf_write)
+
+
