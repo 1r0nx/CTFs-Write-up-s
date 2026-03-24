@@ -15,12 +15,13 @@ So here something I need to mention is that compared to all previous challenges,
 
 Also one of the hints of the challenges says `Overwrite the GOT entry for puts to point to win`.
 
-The problem is:
+The problem is:  
+
 ![](./img/31.png)
 
 ![](./img/32.png)
 
-At `main+189` is the second printf `format string` vuln. Just after that, the `puts` function is called. If we overwrite the `GOT` of `puts` to points to win, win calls puts, but puts points now to win, so puts will call win and so one ans so one. We get an infinite loop, the program crashes, and no flag for us :(  
+At `main+189` is the second printf `format string` vuln. Just after that, the `puts` function is called. If we overwrite the `GOT` of `puts` to points to win, at `main+201` puts call win, but in win puts is called also so puts calls win again and so one and so one. We get an infinite loop, the program crashes, and no flag for us :(  
 I was stuck here for soooooo long.  
 And then I've noticed a function at `main+226`, the `__stack_chk_fail` function. I've found by google searching that this function is triggered when the canary value is different from what it was set at the beginning of the program.    
 
@@ -29,15 +30,15 @@ A canary is a random secret value placed on the stack between
 the local buffer and the saved return address (saved RIP).
 
 #### STACK LAYOUT
-  [ buffer         ]  ← user input goes here
-  [ canary value   ]  ← random, set at function entry
-  [ saved RBP      ]
-  [ saved RIP      ]  ← return address
+  [ buffer         ]  ← user input goes here  
+  [ canary value   ]  ← random, set at function entry  
+  [ saved RBP      ]  
+  [ saved RIP      ]  ← return address  
 
 #### HOW IT WORKS
   1. At function prologue  → CPU reads canary from fs:0x28 and writes it on the stack
   2. At function epilogue  → CPU reads it back and XORs with the original value in fs:0x28
-  3. If result == 0 → values match → normal return ✅
+  3. If result == 0 → values match → normal return ✅  
 	    If result != 0 → buffer overflow detected → __stack_chk_fail() is called → abort ❌
 
 #### WHY IT EXISTS
