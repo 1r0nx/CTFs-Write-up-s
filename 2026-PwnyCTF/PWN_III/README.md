@@ -24,8 +24,29 @@ When a function returns, it looks at the stack to find the "Return Address".
 We overwrite this address and the memory following it to chain gadgets.
 
 [ STACK LAYOUT ]
-| Memory Address | Content | Description | |:--------------:|:-------:|:------------| | **Higher** | `GADGET n...` | Continued ROP chain | | ↑ | `GADGET 2` | e.g., `system()` address | | | | `ARG FOR G1` | Value popped into RDI (e.g., `&"/bin/sh"`) | | | | `GADGET 1` | RIP starts here (e.g., `pop rdi; ret`) | | | | `Saved RBP` | 8 bytes of junk data (e.g., `b"B"*8`) | | | | **CANARY** | **8 bytes (Must be leaked & restored)** | | **Lower** | `Buffer` | Padding to reach Canary (use `cyclic(N)`) |
+```text
 
+Address | Content | Description
+
+--------|------------------------|-----------------------------------------
+
+High | [ GADGET 3 / FUNC ] | Next step (e.g., system() address)
+
+↑ | [ DATA FOR GADGET 2 ] | Value popped into RSI (e.g., 0x0)
+
+| | [ GADGET 2 ] | e.g., pop rsi; ret
+
+| | [ DATA FOR GADGET 1 ] | Value popped into RDI (e.g., &"/bin/sh")
+
+| | [ GADGET 1 ] | RIP starts here (e.g., pop rdi; ret)
+
+| | [ Saved RBP ] | 8 bytes of junk data (e.g., b"B"*8)
+
+| | [ STACK CANARY ] | 8 bytes (Must be leaked & restored)
+
+Low | [ Padding / Buffer ] | N bytes to reach Canary (use cyclic(N))
+
+```
 ### 4. ESSENTIAL TOOLS
 ------------------
 - Find gadgets:  `ropper --file libc.so.6 --search "pop rdi"` 
