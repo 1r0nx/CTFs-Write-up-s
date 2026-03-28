@@ -4,7 +4,7 @@
 [Source code](./handout/3-ret2system)
 
 For this we are given a shared object file named `libc-2.31.so`  
-This file contains some useful functions and we need it to perform some calculation so before starting we need to use `pwninit` so it can link the binary to our file locally
+This file contains some useful functions and we need it to perform some calculation, but before starting we need to use `pwninit` so it can link the binary to our file locally.  
 
 ![](./img/13.png)
 
@@ -17,7 +17,7 @@ Let's check the protections on the binary and the shared object
 For this challenge our goal is to call the system function in the libc shared object from the program. To do this we need to calculate the base address of the libc by leaking an address from the libc and then subtract it from the address in the symbols.  
 But here we do not have a `format string` we can leverage to leak it.  
 
-There is no 'Stack Canary' so we can overwrite the return address of the program (because of the gets function). We will use this and use an ROP chain to leak a `printf` address at runtime, redirect the program to main, then compute the libc base address with the leak, compute the additional gadgets we need and call the system function
+There is no 'Stack Canary' so we can overwrite the return address of the program (because of the gets function). We will use this and use an ROP chain to leak a `printf` address at runtime, redirect the program to main, then compute the libc base address with the leak, compute the additional gadgets we need and call the system function.  
 
 Final script:
 
