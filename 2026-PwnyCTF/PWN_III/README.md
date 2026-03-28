@@ -1,5 +1,6 @@
 ================================================================================
-RE-TURN ORIENTED PROGRAMMING (ROP) -
+# RE-TURN ORIENTED PROGRAMMING (ROP) -
+
 ================================================================================
 
 ### 1. WHAT IS ROP?
@@ -11,11 +12,11 @@ code found in the binary or libraries (libc). These snippets are called "Gadgets
 
 ### 2. ANATOMY OF A GADGET
 ----------------------
-A gadget is a sequence of instructions ending in a 'ret' (return) instruction.
+A gadget is a sequence of instructions ending in a 'ret' (return) instruction.  
 Example:  pop rdi ; ret
 
-- POP RDI: Takes the value currently on top of the stack and puts it into RDI.
-- RET:     Pops the next address from the stack into the Instruction Pointer (RIP).
+- pop rdi: Takes the value currently on top of the stack and puts it into RDI register
+- ret:     Pops the next address from the stack into the Instruction Pointer (RIP).
 
 ### 3. THE ROP CHAIN STRUCTURE
 --------------------------
@@ -23,19 +24,7 @@ When a function returns, it looks at the stack to find the "Return Address".
 We overwrite this address and the memory following it to chain gadgets.
 
 [ STACK LAYOUT ]
-+-------------------------+
-|  Padding / Buffer       | <- Overwritten by cyclic(N)
-+-------------------------+
-|  Canary (if enabled)    | <- Must be leaked and restored
-+-------------------------+
-|  Saved RBP (8 bytes)    | <- Junk data (e.g., b"B"*8)
-+-------------------------+
-|  GADGET 1 ADDRESS       | <- RIP starts here (e.g., POP RDI; RET)
-+-------------------------+
-|  DATA FOR GADGET 1      | <- This value is "popped" into RDI
-+-------------------------+
-|  GADGET 2 ADDRESS       | <- Next link (e.g., system() address)
-+-------------------------+
+| Memory Address | Content | Description | |:--------------:|:-------:|:------------| | **Higher** | `GADGET n...` | Continued ROP chain | | ↑ | `GADGET 2` | e.g., `system()` address | | | | `ARG FOR G1` | Value popped into RDI (e.g., `&"/bin/sh"`) | | | | `GADGET 1` | RIP starts here (e.g., `pop rdi; ret`) | | | | `Saved RBP` | 8 bytes of junk data (e.g., `b"B"*8`) | | | | **CANARY** | **8 bytes (Must be leaked & restored)** | | **Lower** | `Buffer` | Padding to reach Canary (use `cyclic(N)`) |
 
 ### 4. ESSENTIAL TOOLS
 ------------------
