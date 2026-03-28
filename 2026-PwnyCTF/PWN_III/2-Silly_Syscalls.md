@@ -2,7 +2,8 @@
 
 [Source code](./handout/2-Silly_Syscalls)
 
-So now we do not have a win function. But we do get a 'random_string'. The starting method is same as previous but now instead of calling a win function we need to make a syscall.
+So now we do not have a win function. But we do get a 'random_string'.  
+The starting method is same as previous but now instead of calling a win function we need to make a syscall.
 
 Here I will use the `rop.raw()` function to generate the chain
 
@@ -61,3 +62,4 @@ conn.interactive()
 
 ![](./img/11.png)
 
+[3-ret2system](./3-ret2system.md)
