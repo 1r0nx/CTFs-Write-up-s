@@ -25,27 +25,19 @@ We overwrite this address and the memory following it to chain gadgets.
 
 [ STACK LAYOUT ]
 ```text
-
-Address | Content | Description
-
---------|------------------------|-----------------------------------------
-
-High | [ GADGET 3 / FUNC ] | Next step (e.g., system() address)
-
-↑ | [ DATA FOR GADGET 2 ] | Value popped into RSI (e.g., 0x0)
-
-| | [ GADGET 2 ] | e.g., pop rsi; ret
-
-| | [ DATA FOR GADGET 1 ] | Value popped into RDI (e.g., &"/bin/sh")
-
-| | [ GADGET 1 ] | RIP starts here (e.g., pop rdi; ret)
-
-| | [ Saved RBP ] | 8 bytes of junk data (e.g., b"B"*8)
-
-| | [ STACK CANARY ] | 8 bytes (Must be leaked & restored)
-
-Low | [ Padding / Buffer ] | N bytes to reach Canary (use cyclic(N))
-
++-------------------------+
+|  Padding / Buffer       | <- Overwritten by cyclic(N)
++-------------------------+
+|  Canary (if enabled)    | <- Must be leaked and restored
++-------------------------+
+|  Saved RBP (8 bytes)    | <- Junk data (e.g., b"B"*8)
++-------------------------+
+|  GADGET 1 ADDRESS       | <- RIP starts here (e.g., POP RDI; RET)
++-------------------------+
+|  DATA FOR GADGET 1      | <- This value is "popped" into RDI
++-------------------------+
+|  GADGET 2 ADDRESS       | <- Next link (e.g., system() address)
++-------------------------+
 ```
 ### 4. ESSENTIAL TOOLS
 ------------------
