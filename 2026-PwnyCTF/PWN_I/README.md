@@ -179,10 +179,7 @@ system("/bin/sh")
 
 ---
 
-## Final Thought
-
-A buffer overflow is not just "writing too much data"  
-👉 It is about **controlling execution flow through memory corruption**
+A buffer overflow is not just "writing too much data", it is about **controlling execution flow through memory corruption**
 
 [Bug Bounty 1](./Bug_Bounty_1.md)
 

@@ -14,10 +14,10 @@ Let's check the protections on the binary and the shared object
 
 ![](./img/14.png)
 
-For this challenge our goal is to call the system function in the libc shared object from the program. To do this we need to calculate the base address of the libc by leaking an address from the libc and then subtract it from the address in the symbols.  
+For this challenge our goal is to call the system function located in the file `libc-2.31.so` from the program. To do this we need to calculate the base address of the libc by leaking an address from the libc and then subtract it from the address in the symbols.  
 But here we do not have a `format string` we can leverage to leak it.  
 
-There is no 'Stack Canary' so we can overwrite the return address of the program (because of the gets function). We will use this and use an ROP chain to leak a `printf` address at runtime, redirect the program to main, then compute the libc base address with the leak, compute the additional gadgets we need and call the system function.  
+There is no 'Stack Canary' so we can overwrite the return address of the program (because of the gets function). We will use and an ROP chain to leak a `printf` address at runtime, redirect the program back to main, then compute the libc base address with the leak, compute the additional gadgets we need and call the system function.  
 
 Final script:
 

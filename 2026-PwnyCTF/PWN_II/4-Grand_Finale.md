@@ -35,7 +35,7 @@ for next calls: address already there, jump directly)
   Full RELRO     →  GOT is read-only  → cannot overwrite ❌
 
 
-`PIE` is not enabled so we can just retrieve the address of the `print_flag` address with the `nm` command (or with `elf.symbols['print_flag'` in the exploit code), and find the offset the `name` variable is at the previous method.
+`PIE` is not enabled so we can just retrieve the address of the `print_flag` address with the `nm` command (or with `elf.symbols['print_flag'` in the exploit code), and find the offset the `name` variable is at as we did in the previous challenges.
 
 In the `GOT` we will overwrite the `printf` function so the next time it runs, `print_flag` get executed.  
 

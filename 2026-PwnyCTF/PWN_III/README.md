@@ -12,10 +12,10 @@ code found in the binary or libraries (libc). These snippets are called "Gadgets
 ### 2. ANATOMY OF A GADGET
 ----------------------
 A gadget is a sequence of instructions ending in a 'ret' (return) instruction.  
-Example:  pop rdi ; ret
+Example:  `pop rdi ; ret`
 
-- pop rdi: Takes the value currently on top of the stack and puts it into RDI register
-- ret:     Pops the next address from the stack into the Instruction Pointer (RIP).
+- `pop rdi`: Takes the value currently on top of the stack and puts it into RDI register
+- `ret`:     Pops the next address from the stack into the Instruction Pointer (RIP).
 
 ### 3. THE ROP CHAIN STRUCTURE
 --------------------------
@@ -40,7 +40,7 @@ We overwrite this address and the memory following it to chain gadgets.
 ```
 ### 4. ESSENTIAL TOOLS
 ------------------
-- Find gadgets:  `ropper --file libc.so.6 --search "pop rdi"` 
+- Find gadgets:  `ROPgadget --binary chal ` 
 - Find strings:  `strings -tx libc.so.6 | grep "/bin/sh"` 
 - PwnTools ROP:  rop = ROP(libc); rop.find_gadget(['pop rdi', 'ret'])
 

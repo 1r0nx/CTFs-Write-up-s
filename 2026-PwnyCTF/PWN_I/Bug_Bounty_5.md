@@ -75,7 +75,7 @@ from pwn import *
 
 conn = gdb.debug('./challenge', gdbscript='''
 	source /opt/tools/gdb/pwndbg/gdbinit.py # ajust this line to your "gdbinit.py" file. If gdb start directly with pwndbg you can delete this line
-	b *vuln+71
+	b *vuln+71 # stop the program just after we send our payload
 	c
 ''')
 

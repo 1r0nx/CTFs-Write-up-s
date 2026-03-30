@@ -5,8 +5,7 @@
 From the source code, we can see that the flag is read in the main function and is stored in the `flag` variable.  
 It means the `flag` is on the stack.
 
-From the source code, there is a format string vulnerability in the `greet` function  
-[Format String Vulnerability Explanation](./README.md)  
+From the source code, there is a format [string vulnerability](./README.md) in the `greet` function  
 
 ![](./img/2.png)
 

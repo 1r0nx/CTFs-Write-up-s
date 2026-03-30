@@ -1,5 +1,3 @@
-This series of challenge is focused on **format string vulnerability**.  
-So we need to understand what it is.  
  
 A format string vulnerability happens when a program uses user input directly as the format argument in functions like `printf`, `fprintf`, or `sprintf`.
 

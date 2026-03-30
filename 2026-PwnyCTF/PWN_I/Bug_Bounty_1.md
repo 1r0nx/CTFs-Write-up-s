@@ -19,7 +19,7 @@ Here I sent the letter `A` 39 times (39 bytes) and the next variable is not chan
 ![](./img/4.png)
 
 But here with 40 A's it changed and we get the flag. Why is that ? Isn't it supposed to be 41 ?
-Yes it is, but the `gets` function add at the end of the `name` variable a newline character and the newline character overwrite the variable `number` (that mean that we in fact we sent 41 bytes). We can see on the picture the first bytes of number is `00`.
+Yes it is, but the `gets` function add at the end of the `name` variable a `null terminator '\x00'` character and this character overwrite the variable `number` (that mean that we in fact we sent 41 bytes). We can see on the picture the first bytes of number is `00`.
 
 
 ```python

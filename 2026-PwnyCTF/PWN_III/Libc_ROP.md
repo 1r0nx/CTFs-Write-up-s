@@ -13,9 +13,11 @@ Now from the source code there is a `format string` vulnerability and we can per
 
 2. We need to find a leak to compute the libc base address. I found that with the leak `%13$p` we can compute `libc_start_main_addr` who will be  `libc_start_main_addr = leaked(%13$p) - 0xf3)`, and the libc base address will be `libc_base_address = libc_start_main_addr - address_in_symbols["__libc_start_main"]`
 
-3. Thirdly canary is activated. It means that between `saved RBP` and `answer` there is the canary value `[answer][canary][saved_RBP]`. So if we try to overwrite the return address we will need to overwrite the canary and the program will stop. The answer to this is that `%11$p` leaks the canary value so we can leak it and add it to our payload so it stays the same and do not crash the program.  
+3. Thirdly canary is activated. It means that between `saved RBP` and `answer` there is the canary value `[answer][canary][saved_RBP][return_address]`. So if we try to overwrite the return address we will need to overwrite the canary and the program will stop. The answer to this is that `%11$p` leaks the canary value so we can leak it and add it to our payload so it stays the same and do not crash the program.  
 
 4. Use and ROP to spawn a shell
+
+Final script:
 
 ```python
 from pwn import *
