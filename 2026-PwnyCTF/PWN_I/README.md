@@ -1,28 +1,188 @@
-This part I is focused on buffer overflow vulnerability from basics to advanced concept
 
-**Register and Stack overview**  
-Let's start by some simple term clarification and explanation.  
+## Buffer Overflow — Everything You Need to Understand
 
-To run instructions a program uses memory and CPU .
+### 1. What is a Buffer Overflow?
 
-Registers:
-Registers are very small, very fast storage inside the CPU.
-They hold important values like numbers, addresses, or results.
-Examples: RAX, RBX, RCX (on x86_64).
-They are used constantly during execution.
+A **buffer overflow** happens when a program writes more data into a buffer (a fixed-size memory region) than it can hold.
 
-Stack:
-The stack is a part of memory used to store temporary data.
-It works like a stack of plates (Last In, First Out).
+This overwrites adjacent memory and can lead to:
+
+- Crashes
+    
+- Unexpected behavior
+    
+- Code execution (what we/attackers want)
+    
+
+---
+
+### 2. Memory Basics
+
+#### Process Memory Layout
+
+Typical program memory is organized like this:
+
+```
+[ High Addresses ]
+Stack      ↓ (grows down)
+Heap       ↑ (grows up)
+BSS
+Data
+Text (code)
+[ Low Addresses ]
+```
+
+---
+
+### 3. Stack (Most Important for BOF)
+
+The stack stores:
+
+- Local variables
+    
+- Function arguments
+    
+- Return addresses
+    
+
+Example:
+
+```c
+void vuln() {
+    char buffer[32];
+}
+```
+
+---
+
+### 4. Stack Frame Anatomy
+
 When a function is called:
-- arguments and return address are pushed onto the stack
-- local variables are stored there
-When the function ends:
-- data is removed (popped) from the stack
 
-Summary:
-Registers = fast CPU storage (small, limited)  
-Stack = organized memory for function calls (larger, slower)
+```
+| Return Address |  ← saved RIP/EIP
+| Saved Base Ptr |  ← RBP/EBP
+| Local Variables|
+```
+
+So in memory:
+
+```
+buffer → [..............]
+          [..............]
+saved RBP
+return address  ← TARGET
+```
+
+---
+
+### 5. Why Overflow Happens
+
+Example vulnerable code:
+
+```c
+void vuln() {
+    char buffer[32];
+    gets(buffer);
+}
+```
+
+`gets()` does NOT check size → dangerous
+
+If you input >32 bytes:
+
+- You overwrite saved RBP
+    
+- Then overwrite return address
+    
+
+---
+
+### 6. Exploitation Goal
+
+👉 Control the **return address**
+
+Instead of returning normally:
+
+- Redirect execution to:
+    
+    - shellcode
+        
+    - system("/bin/sh")
+        
+    - ROP chain
+        
+
+---
+
+## 7. Calling Conventions (Important)
+
+### x86 (32-bit)
+
+- Arguments passed on stack  
+
+### x64 (Linux)
+
+ - Arguments are passed in registers in this order:
+	 1. RDI 
+	 2. RSI 
+	 3. RDX 
+	 4. RCX 
+	 5. R8 
+	 6. R9
+	 7. ...
+
+
+Example:
+
+```c
+system("/bin/sh")
+```
+
+→ "/bin/sh" must be in RDI
+
+---
+
+### 8. Protections You Must Understand
+
+### NX (No eXecute)
+
+- Stack is not executable
+    
+- No shellcode → use ROP
+    
+
+---
+
+### ASLR (Address Space Layout Randomization)
+
+- Randomizes memory addresses
+    
+- You need leaks
+    
+
+---
+
+### Canary (Stack Cookie)
+
+- Detects overflow before return
+    
+- Must bypass or leak
+    
+
+---
+
+### PIE (Position Independent Executable)
+
+- Binary base address is randomized
+
+
+---
+
+## Final Thought
+
+A buffer overflow is not just "writing too much data"  
+👉 It is about **controlling execution flow through memory corruption**
 
 [Bug Bounty 1](./Bug_Bounty_1.md)
 

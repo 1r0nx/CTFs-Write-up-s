@@ -15,6 +15,7 @@ Now from the source code there is a `format string` vulnerability and we can per
 
 3. Thirdly canary is activated. It means that between `saved RBP` and `answer` there is the canary value `[answer][canary][saved_RBP]`. So if we try to overwrite the return address we will need to overwrite the canary and the program will stop. The answer to this is that `%11$p` leaks the canary value so we can leak it and add it to our payload so it stays the same and do not crash the program.  
 
+4. Use and ROP to spawn a shell
 
 ```python
 from pwn import *
