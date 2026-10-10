@@ -32,7 +32,7 @@ printf("Deleted user %d (named %s)\n\n", arg1, users[arg1]->name);
 free(users[arg1]);
 ```
 
-And here is what happen when the program delete an user. The problem here is when it does `free(users[arg1])` it tells to the program that the memory at this pointer is avalaible, but the pointer still points to the value.
+And here is what happen when the program delete an user. The problem here is when it does `free(users[arg1])` it tells to the program that this pointer is avalaible, but the pointer still points to the value(s).
 
 So if after we delete an user the program allocate a 64 bytes variable just after it will give us the previous pointer we just freed with it value(s)
 
