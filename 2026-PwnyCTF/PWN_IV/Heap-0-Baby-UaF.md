@@ -34,9 +34,9 @@ free(users[arg1]);
 
 And here is what happen when the program delete an user. The problem here is when it does `free(users[arg1])` it tells to the program that this pointer is avalaible, but the pointer still points to the value(s).
 
-So if after we delete an user the program allocate a 64 bytes variable just after it will give us the previous pointer we just freed with it value(s)
+So if after we delete an user, and the program allocate a 64 bytes variable just after it will give us the previous pointer we just freed with it value(s)
 
-From there here is the way to get a shell, from the source code we can see that if we can login as the admin user and run the `shell` command, we will get a shell.
+From the source code we can see that if we can login as the admin user and run the `shell` command, we will get a shell.
 
 But the problem here is that the admin user is created at the beginning and is not logged in.
 
